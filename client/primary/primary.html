@@ -1,0 +1,9 @@
+<template name="primary">
+	<h1>Enter a new ingredient here and all details</h1>
+	<p>Name <input id="name"></p>
+  
+  <button id="create">Submit</button>
+  {{#each primaryList}}
+  	<li>{{name}} - {{_id}}<button class="createQr">QR</button><button id="delete">X</button><div id={{_id}}></div></li>
+  {{/each}}
+</template>	
