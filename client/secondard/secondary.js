@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Tertiary } from '../../api/api.js';
 import { Secondary } from '../../api/api.js';
 import { Primary } from '../../api/api.js';
 
@@ -158,6 +159,71 @@ Template.secondary.events({
     printWin.close();
   },
 
+  // Remove the secondary from the secondary DB and move to tertiary database - this may not be the best way to handle the transition from secondary to tertiary
+
+  'click #tertiary'(){
+    console.log(this._id)
+    var secondaryToMove = Secondary.findOne({_id: this._id})
+    console.log(secondaryToMove);
+    Tertiary.insert(secondaryToMove);
+    Secondary.remove(this._id);
+  },
+
+  // Scanning event for mobile
+
+  'click #mobilescan'() {
+      
+
+      cordova.plugins.barcodeScanner.scan(
+        function (result) {
+          // sweetAlert("We got a barcode\n" +
+          //   "Result: " + result.text + "\n" +
+          //   "Format: " + result.format + "\n" +
+          //   "Cancelled: " + result.cancelled);
+
+
+         if ((result.text != null) && (result.text !=undefined)) {
+
+       
+
+            // Search for both primary and secondary components
+
+            var primary = Primary.findOne({_id : result.text});
+            console.log('primary', primary);
+
+            // if(primary == undefined){
+            //   var secondary = Secondary.findOne({_id : secondary});
+            // }
+
+            // Confirmation that the correct item is being added
+
+            sweetAlert({
+              title: "Add?" + primary.name + " to the recipe",
+              text: "",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Yes",
+              closeOnConfirm: false,
+              html: false
+            }, function(){
+              secondary.push(primary);
+              // console.log('array', secondary)
+              swal("Added!",
+              primary.name + " has been added to this secondary",
+              "success");
+            });
+            // var secondard = Secondary.findOne({_id : message});
+            
+          }
+        }, 
+        function (error) {
+          alert("Scanning failed: " + error);
+        }
+     );
+
+    }
+
 });
 
 
@@ -165,38 +231,14 @@ Template.secondary.events({
 
 // QR scanner for mobile - functions differently than the lap top scanner below
 
-// if (Meteor.isCordova) {
+if (Meteor.isCordova) {
 
-//   Template.barcode_scanner.events({
-//     'click button': function () {
-
-//       cordova.plugins.barcodeScanner.scan(
-//         function (result) {
-//           alert("We got a barcode\n" +
-//             "Result: " + result.text + "\n" +
-//             "Format: " + result.format + "\n" +
-//             "Cancelled: " + result.cancelled);
+  Template.secondary.events({
 
 
-//           var ingredient = Raws.findOne({'_id': result.text})
-//           var divOne = document.getElementById(ingredient.productId);
-//           alert(divOne)
-//           divOne.style.display='none';
-//           var list = $('#ingredientList').children(':visible').length
-//           if(list == 0){
-//             $('#newBatch').show();
-//           }      
-//         }, 
-//         function (error) {
-//           alert("Scanning failed: " + error);
-//         }
-//      );
+  });
 
-//     }
+}
 
-//   });
 
-// }
-
-// This scan works on the computer only, the scanner in the code above is what works on mobile
 

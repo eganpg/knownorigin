@@ -1,0 +1,12 @@
+<template name="tertiary">
+	<h1>This is the tertiary view</h1>
+	{{#each tertiary}}
+		<li>
+			{{_id}} {{name}} <button id="delete">X</button><button id="secondary">Make Secondary</button><div id={{_id}}></div>
+			{{#each secondary}}
+				<ul>{{name}}</ul>
+			{{/each}}
+		</li>
+	{{/each}}
+
+</template>

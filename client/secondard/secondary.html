@@ -1,22 +1,31 @@
 <template name="secondary">
 	<h1>Secondary Template</h1>
 	<p>Here you are able to create unique recipes based on any combination of ingredients in your database</p>
+	{{#if isPhone}}
+		<h1>Phone</h1>
+		<button id="mobilescan">Scan</button>
+		<button id="scanOff">Off</button>
+		<button id="create">Create</button><br>
+		<p>Name <input id="name"></p>
+	{{/if}}
 	<!-- This is the laptop scanner -->
-
+	{{#if isDesktop}}
   <div style="width: 250px">{{>qrScanner}}</div>  
-	<!-- {{scan}} -->
-	<button id="scan">Scan</button>
-	<button id="scanOff">Off</button><br>
+  <button id="scan">Scan</button>
+	<button id="scanOff">Off</button>
+	<button id="create">Create</button><br>
 	<p>Name <input id="name"></p>
-	<button id="create">Create</button>
+  {{/if}}
+	<!-- {{scan}} -->
+	
+	
 
 	{{#each second}}
 		<li>
-			{{_id}} {{name}} <button class="createQr">QR</button><button id="delete">X</button><div id={{_id}}></div>
+			{{_id}} {{name}} <button class="createQr">QR</button><button id="delete">X</button><button id="tertiary">Make Final</button><div id={{_id}}></div>
 			{{#each secondary}}
-				<li>{{name}}</li>
+				<ul>{{name}}</ul>
 			{{/each}}
 		</li>
-		
 	{{/each}}
 </template>

@@ -18,3 +18,9 @@ FlowRouter.route('/secondary', {
     BlazeLayout.render( "baseTemplate", {content: "secondary"});
   }
 });
+
+FlowRouter.route('/tertiary', {
+  action: function() {
+    BlazeLayout.render( "baseTemplate", {content: "tertiary"});
+  }
+});

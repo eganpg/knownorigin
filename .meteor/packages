@@ -28,3 +28,4 @@ twbs:bootstrap
 steeve:jquery-qrcode
 hitchcott:qr-scanner
 kevohagan:sweetalert
+mystor:device-detection

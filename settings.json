@@ -1,0 +1,11 @@
+
+
+
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL":"mongodb://peter:alden3258@ds023465.mlab.com:23465/production" 
+    }
+  }
+}
+
