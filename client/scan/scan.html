@@ -1,0 +1,72 @@
+<template name="scan">
+	{{#if isPhone}}
+		<button id="mobilescan">Scan</button>
+		<button id="scanOff">Off</button>
+	{{/if}}
+	<!-- This is the laptop scanner -->
+	{{#if isDesktop}}
+	  <div style="width: 250px; display: none;">{{>qrScanner}}</div>  
+	  <button id="scan">Scan</button>
+		<button id="scanOff">Off</button>
+		<!-- <button id="create">Create</button><br> -->
+		<!-- <p>Name <input id="name"></p> -->
+		
+  {{/if}}
+
+  {{#if quaternary}}
+		{{#if showquat}}
+	  	<div class="row">
+		  	<div class="col-md-6 col-md-offset-3 quaternary">
+		  		<p>{{quaternary.contents.name}}- Package {{quaternary.packageNumber}} of {{quaternary.totalBatchQuantity}}</p>
+		  		<img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'>
+		  	</div>
+	  	</div>
+  	{{/if}}
+  	{{#if quatclicked}}
+  	<div class="row">
+	  	{{#each quaternary.contents.secondary}}
+	  		{{#if secondary}}
+					<div class="col-md-4 secondary">
+						{{name}} - {{_id}} - {{secondary}}
+						<img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'>  
+					</div>
+				{{else}}
+					<div class="col-md-4 primary">
+						{{name}} - {{_id}} 
+						<img style="width: 100%" src={{photo}}>  
+					</div>
+				{{/if}}
+			{{/each}}
+		</div>
+		{{/if}}
+
+		{{#if showsecondary}}
+		<div class="row">					
+		 	{{#each showsecondary.secondary}}
+		 		{{#if secondary}}
+					<div class="col-md-4 secondary">
+						{{name}} - {{_id}} - {{secondary}}
+						<img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'>  
+					</div>
+				{{else}}
+					<div class="col-md-4 primary">
+						{{name}} - {{_id}} 
+						<img style="width: 98%" src={{photo}}>  
+					</div>
+				{{/if}}
+			{{/each}}
+		</div>
+		{{/if}}
+		{{#if showprimary}}
+		<div class="row">
+			<p>{{showprimary.name}}</p>
+			<p>{{showprimary.dateReceived}}</p>
+		</div>
+
+		{{/if}}
+	  {{/if}}
+  <!-- Display the quaternary view here will contain many many loops-->
+  <button id="reset" class="form-control btn">Reset</button>
+  
+
+</template>

@@ -5,6 +5,7 @@ import { Secondary } from '../../api/api.js';
 import { Primary } from '../../api/api.js';
 
 import './secondary.html';
+import '../main.html'
 
 // Global Array that holds the array of primary before saving
 
@@ -21,7 +22,24 @@ Template.secondary.rendered = function () {
 
 Template.secondary.helpers({
 
-// 
+// Autocomplete code
+
+  settings: function() {
+      return {
+        position: "top",
+        limit: 20,
+        rules: [
+          {
+        
+          token: '@',
+          collection: Meteor.users,
+          field: "username",
+          template: Template.secondary
+        
+          }
+        ]
+      };
+    },
 
   // qr(){
   //   console.log(qrScanner.message());
@@ -39,7 +57,7 @@ Template.secondary.helpers({
 
   second(){
     console.log(Secondary.findOne())
-    return Secondary.find();
+    return Secondary.find({},{sort:{dateReceived: -1}});
   }
 });
 ////////////////////////////////////
@@ -53,11 +71,16 @@ Template.secondary.events({
   'click #create'(event, instance) {
     console.log(secondary);
     var name = document.getElementById("name").value;
-
+    var photo = document.getElementById("photo").getAttribute('src');
+    console.log(name);
     Secondary.insert({
       name: name,
     	secondary: secondary,
+      dateReceived: new Date(),
+      photo: photo
     	
+    }, function(){
+      secondary = [];
     });
     
   },
@@ -85,11 +108,47 @@ Template.secondary.events({
         // Search for both primary and secondary components
 
         var primary = Primary.findOne({_id : message});
+        if(primary != undefined){
+          sweetAlert({
+          title: "Add?" + primary.name + " to the recipe",
+          text: "",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes",
+          closeOnConfirm: false,
+          html: false
+          }, function(){
+            secondary.push(primary);
+            // console.log('array', secondary)
+            swal("Added!",
+            primary.name + " has been added to this secondary",
+            "success");
+          });
+        }
         console.log('primary', primary);
 
-        // if(primary == undefined){
-        //   var secondary = Secondary.findOne({_id : secondary});
-        // }
+        if(primary == undefined){
+          var secondary2 = Secondary.findOne({_id : message});
+            sweetAlert({
+            title: "Add?" + secondary2.name + " to the recipe",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            closeOnConfirm: false,
+            html: false
+          }, function(){
+            secondary.push(secondary2);
+            // console.log('array', secondary)
+            swal("Added!",
+            secondary2.name + " has been added to this secondary",
+            "success");
+          });
+        }
+
+        
 
         // Confirmation that the correct item is being added
 
@@ -146,7 +205,7 @@ Template.secondary.events({
     
     windowContent += '<body>'
     windowContent += '<img src="' + dataUrl + '">';
-    windowContent += '<p>'+this.name+'</p>'
+    windowContent += '<p style="width: 50px; font-size:10px;">'+this.name+'</p>'
     // windowContent += '<p>'+this.batchNumber+'</p>'
     windowContent += '</body>';
     windowContent += '</html>';
@@ -169,7 +228,7 @@ Template.secondary.events({
     Secondary.remove(this._id);
   },
 
-  // Scanning event for mobile
+  // Scanning event for mobile - currently needs to be updated in order to scan secondary components, only scans primary
 
   'click #mobilescan'() {
       
@@ -222,7 +281,25 @@ Template.secondary.events({
         }
      );
 
-    }
+    },
+
+     // take a photo
+
+  'click #phototrigger'(){
+    var cameraOptions = {
+            width: 200,
+            height: 200
+        };
+    MeteorCamera.getPicture(cameraOptions, function (error, data) {
+       if (!error) {
+
+           $('.photo').attr('src', data); 
+           $('.photo').attr('value', data); 
+       }
+    });
+    event.preventDefault();
+  }
+
 
 });
 

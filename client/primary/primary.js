@@ -4,46 +4,35 @@ import { Primary } from '../../api/api.js';
 
 import './primary.html';
 
-Template.primary.helpers({
+
+
+Template.primarylistview.helpers({
   primaryList() {
-    return Primary.find();
+  	console.log(Primary.findOne());
+    return Primary.find({},{sort:{dateReceived: -1}});
   },
+  
 });
+Session.set('showupdate', false)
+Template.update.helpers({
+	showupdate(){
 
-
-
-Template.primary.events({
-
-// Create a new primary
-	
-  'click #create'(event, instance) {
-  	var name = document.getElementById("name").value;
-  	console.log(name);
-    Primary.insert({
-    	name: name,
-    	// dateReceived: dateReceived,
-    	// detail: detail,
-    	// lotNumber: lotNumber,
-    	// expirationDate: expirationDate,
-    	// placeOfOrigin: placeOfOrigin,
-    	// climate: climate,
-    	// heatLevel: heatLevel,
-    	// farmName: farmNamem,
-    	// growerName: growerName,
-    	// location: location
-    });
-    // document.getElementById("name").value('');
+  	return Session.get('showupdate')
+  	console.log(Session.get('showupdate'));
   },
+  value(){
+  	return Primary.findOne({_id : Session.get('update')})
+  }
+})
 
-// Delete a existing primary
+Template.primarylistview.events({
+	// Delete a existing primary
 
   'click #delete'(event, instance) {
   	Primary.remove(this._id)
   },
 
-// Update an existing primary
-
-// Creates a qrcode containing the _id corresponding to the unique instance of the ingredient
+  // Creates a qrcode containing the _id corresponding to the unique instance of the ingredient
 
 	'click .createQr'(event, instance){
     var id = String(this._id);
@@ -66,7 +55,7 @@ Template.primary.events({
     
     windowContent += '<body>'
     windowContent += '<img src="' + dataUrl + '">';
-    windowContent += '<p>'+this.name+'</p>'
+    windowContent += '<p style="width: 50px; font-size:10px;">'+this.name+'</p>'
     // windowContent += '<p>'+this.batchNumber+'</p>'
     windowContent += '</body>';
     windowContent += '</html>';
@@ -79,4 +68,177 @@ Template.primary.events({
     printWin.close();
   },
 
+  // This shows the update form for each of the primarys
+
+  'click #update'(){
+  	console.log(this._id);
+  	Session.set('update', this._id);
+  	Session.set('showupdate', true);
+  }
+})
+
+Template.primarylistview.rendered=function() {
+	
+}
+
+Template.primary.onRendered(function() {
+	$('#my-datepicker').datepicker();
+  this.autorun(function () {
+    if (GoogleMaps.loaded()) {
+      $("#origin").geocomplete().bind("geocode:result", function(event, result){
+    console.log(result);
+  });;
+    }
+  });
+});
+
+
+
+Template.primary.events({
+
+// Create a new primary
+	
+  'click #create'(event, instance) {
+  	var name = document.getElementById("name").value;
+  	console.log(name);
+  	var date = document.getElementById("my-datepicker").value;
+  	console.log(date);
+  	var origin = document.getElementById("origin").value;
+  	console.log(origin);
+  	var lotnumber = document.getElementById("lotnumber").value;
+  	console.log(lotnumber);
+  	var description = document.getElementById("description").value;
+  	console.log(description);
+  	var photo = document.getElementById("photo").getAttribute('src');
+ 		// for some reason the photo won't save without removing the last character
+  	// photo = photo.substring(0, photo.length - 1);
+  	console.log(photo)
+    Primary.insert({
+    	name: name,
+    	dateReceived: new Date(),
+    	lotNumber: lotnumber,
+    	expirationDate: date,
+    	placeOfOrigin: origin,
+    	description: description,
+    	
+    	// climate: climate,
+    	// heatLevel: heatLevel,
+    	// farmName: farmNamem,
+    	// growerName: growerName,
+    	photo: photo
+ 
+    },
+    function(error, result){
+      // or try function(error, result) and still get nothing 
+      // console.log('result: ' + result);
+      if(error){
+      	alert(error);
+      }
+      console.log('error: ' + error);
+      console.log('_id: ' + result); //this._id doesn't work either
+      document.getElementById("name").value = "";
+	  	document.getElementById("my-datepicker").value = "";
+	  	document.getElementById("origin").value = "";
+	  	document.getElementById("lotnumber").value = "";
+	  	// document.getElementById("size").value = "";
+	  	sweetAlert('Complete')
+      // $('#photo').attr('src', '')
+    });
+    // document.getElementById("name").value('');
+  },
+
+// Delete a existing primary
+
+  'click #delete'(event, instance) {
+  	Primary.remove(this._id)
+  },
+
+
+  // take a photo
+
+  'click #phototrigger'(){
+  	var cameraOptions = {
+            width: 200,
+            height: 200
+        };
+    MeteorCamera.getPicture(cameraOptions, function (error, data) {
+       if (!error) {
+
+           $('.photo').attr('src', data); 
+           $('.photo').attr('value', data); 
+       }
+    });
+    event.preventDefault();
+  }
+
+});
+
+
+// Updating a record in the update template
+
+Template.update.events({
+	// Create a new primary
+	
+  'click #update'(event, instance) {
+  	var name = document.getElementById("name").value;
+  	var date = document.getElementById("my-datepicker").value;
+  	var origin = document.getElementById("origin").value;
+  	var lotnumber = document.getElementById("lotnumber").value;
+  	var description = document.getElementById("description").value;
+  	var photo = document.getElementById("photo").getAttribute('src');
+ 		// for some reason the photo won't save without removing the last character
+ 		// if(photo != null){
+  	// 	photo = photo.substring(0, photo.length - 1);
+  	// }
+  	var id = Session.get('update');
+  	console.log(id);
+    Primary.update(id, { 
+    	$set:{
+	    	name: name,
+	    	dateReceived: new Date(),
+	    	lotNumber: lotnumber,
+	    	expirationDate: date,
+	    	placeOfOrigin: origin,
+	    	description: description,
+	    	date: date,
+	    	
+	    }
+    	// climate: climate,
+    	// heatLevel: heatLevel,
+    	// farmName: farmNamem,
+    	// growerName: growerName,
+    	// photo: photo
+ 
+    },
+    function(error, result){
+      // or try function(error, result) and still get nothing 
+      // console.log('result: ' + result);
+      if(error){
+      	alert(error);
+      }
+      console.log('error: ' + error);
+      console.log('_id: ' + result); //this._id doesn't work either
+      document.getElementById("name").value = "";
+	  	document.getElementById("my-datepicker").value = "";
+	  	document.getElementById("origin").value = "";
+	  	document.getElementById("lotnumber").value = "";
+	  	// document.getElementById("size").value = "";
+	  	
+      Session.set('showupdate', false);
+     
+      // $('#photo').attr('src', '')
+    });
+    // document.getElementById("name").value('');
+  },
+})
+
+
+// Loading Google Maps
+
+// client
+Meteor.startup(function() {
+  GoogleMaps.load({
+    key: 'AIzaSyDiyK7NJ3myjN7SRKtgC5KNx92ChSp2eAI',
+    libraries: 'places'  // also accepts an array if you need more than one
+  });
 });

@@ -12,7 +12,23 @@ Template.login.helpers({
   counter() {
     return Template.instance().counter.get();
   },
+  user(){
+  	console.log(Meteor.user())
+  }
 });
+
+Template.baseTemplate.helpers({
+	user(){
+		console.log(Meteor.userId())
+    
+		if(Meteor.userId() == 'wivtT3idLr5Go3eqv'){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+})
 
 Template.login.events({
   'click button'(event, instance) {

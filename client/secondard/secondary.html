@@ -1,20 +1,46 @@
 <template name="secondary">
-	<h1>Secondary Template</h1>
+	<h1>sec·ond·ar·y - resulting from someone or something else that is primary</h1>
 	<p>Here you are able to create unique recipes based on any combination of ingredients in your database</p>
 	{{#if isPhone}}
 		<h1>Phone</h1>
 		<button id="mobilescan">Scan</button>
 		<button id="scanOff">Off</button>
-		<button id="create">Create</button><br>
-		<p>Name <input id="name"></p>
+		<!-- <button id="create">Create</button><br> -->
+		<!-- <p>Name <input id="name"></p> -->
+		<div class="row">
+			<div class="col-lg-6">
+		    <div class="input-group">
+		      <input type="text" class="form-control" id="name" placeholder="Name">
+		      <span class="input-group-btn">
+		      <button id="phototrigger">Take Photo</button>
+		 <img id="photo" src={{value.photo}} value={{photo}} style="width: 50px; height: 50px" class="photo">
+		        <button class="btn btn-default" id="create" type="button">Create</button>
+		      </span>
+		    </div><!-- /input-group -->
+		  </div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
 	{{/if}}
 	<!-- This is the laptop scanner -->
 	{{#if isDesktop}}
-  <div style="width: 250px">{{>qrScanner}}</div>  
-  <button id="scan">Scan</button>
-	<button id="scanOff">Off</button>
-	<button id="create">Create</button><br>
-	<p>Name <input id="name"></p>
+	  <div style="width: 250px">{{>qrScanner}}</div>  
+	  <button id="scan">Scan</button>
+		<button id="scanOff">Off</button>
+		<!-- <button id="create">Create</button><br> -->
+		<!-- <p>Name <input id="name"></p> -->
+		<div class="row">
+			<div class="col-lg-6">
+		    <div class="input-group">
+		      <!-- <input type="text" class="form-control" id="name" placeholder="Name"> -->
+		      {{> inputAutocomplete settings=settings id="name" class="form-control" placeholder="Chat..."}}
+		      <span class="input-group-btn">
+		      
+		        <button class="btn btn-default" id="create" type="button">Create</button>
+		      </span>
+		    </div><!-- /input-group -->
+		    <button id="phototrigger">Take Photo</button>
+		 		<img id="photo" src={{value.photo}} value={{photo}} style="width: 50px; height: 50px" class="photo">
+		  </div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
   {{/if}}
 	<!-- {{scan}} -->
 	
@@ -22,7 +48,7 @@
 
 	{{#each second}}
 		<li>
-			{{_id}} {{name}} <button class="createQr">QR</button><button id="delete">X</button><button id="tertiary">Make Final</button><div id={{_id}}></div>
+			{{_id}} - {{name}} - {{dateReceived}} - <img src={{photo}}><button class="createQr">QR</button><button id="delete">X</button><button id="tertiary">Make Final</button><div id={{_id}}></div>
 			{{#each secondary}}
 				<ul>{{name}}</ul>
 			{{/each}}

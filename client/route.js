@@ -12,6 +12,11 @@ FlowRouter.route('/primary', {
     BlazeLayout.render( "baseTemplate", {content: "primary"});
   }
 });
+FlowRouter.route('/primarylistview', {
+  action: function() {
+    BlazeLayout.render( "baseTemplate", {content: "primarylistview"});
+  }
+});
 
 FlowRouter.route('/secondary', {
   action: function() {
@@ -22,5 +27,17 @@ FlowRouter.route('/secondary', {
 FlowRouter.route('/tertiary', {
   action: function() {
     BlazeLayout.render( "baseTemplate", {content: "tertiary"});
+  }
+});
+
+FlowRouter.route('/quaternary', {
+  action: function() {
+    BlazeLayout.render( "baseTemplate", {content: "quaternary"});
+  }
+});
+
+FlowRouter.route('/scan', {
+  action: function() {
+    BlazeLayout.render( "baseTemplate", {content: "scan"});
   }
 });

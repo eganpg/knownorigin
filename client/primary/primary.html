@@ -1,9 +1,48 @@
 <template name="primary">
-	<h1>Enter a new ingredient here and all details</h1>
-	<p>Name <input id="name"></p>
+	<h1>pri·ma·ry - of chief importance; principal</h1>
+	<p>Name <input class="form-control" id="name"></p>
+	<p>Origin<input type="text" class="form-control" id="origin"></p>
+	<p>Description<input type="text" class="form-control" id="description"></p>
+	<p>Expiration Date<input type="text" class="form-control" id="my-datepicker"></p>
+	<!-- <p>Package Size<input type="text" class="form-control" id="size"></p> -->
+	<p>Lot Number<input type="text" class="form-control" id="lotnumber"></p>
+	<!-- <p>Number of Packages in Batch<input type="text" class="form-control" id="quantity"></p> -->
+	
+	<button id="phototrigger">Take Photo</button>
+	 <img id="photo" value={{photo}} style="width: 50px; height: 50px" class="photo">
   
-  <button id="create">Submit</button>
-  {{#each primaryList}}
-  	<li>{{name}} - {{_id}}<button class="createQr">QR</button><button id="delete">X</button><div id={{_id}}></div></li>
-  {{/each}}
+  <button clas="btn" id="create">Submit</button>
+  
 </template>	
+
+<template name="primarylistview">
+	<div class="col-md-6">
+		{{#each primaryList}}
+	  	<li>
+	  		{{name}} - {{_id}}<button class="createQr">QR</button><button id="update" href="primary/{{_id}}" >Update</button><button id="delete">X</button><div id={{_id}}></div>
+	  		<img style="width: 50px; height: 50px" src={{photo}}>
+			</li>
+	  {{/each}}
+  </div>
+  <div class="col-md-6">
+  	{{> update}}
+  </div>
+</template>
+
+<template name="update">
+	{{#if showupdate}}
+		<h1>Update</h1>
+		<p>Name <input class="form-control" id="name" value={{value.name}}></p>
+		<p>Origin<input type="text" class="form-control" id="origin" value={{value.placeOfOrigin}}></p>
+		<p>Description<input type="text" class="form-control" id="description" value={{value.description}}></p>
+		<p>Expiration Date<input type="text" class="form-control" id="my-datepicker" value={{value.expirationDate}}></p>
+		<!-- <p>Package Size<input type="text" class="form-control" id="size" value={{value.size}}></p> -->
+		<p>Lot Number<input type="text" class="form-control" id="lotnumber" value={{value.lotnumber}}></p>
+		<!-- <p>Number of Packages in Batch<input type="text" class="form-control" id="quantity" value={{value.quantity}}></p> -->
+		
+		<button id="phototrigger">Take Photo</button>
+		 <img id="photo" src={{value.photo}} value={{photo}} style="width: 50px; height: 50px" class="photo">
+	  
+	  <button clas="btn" id="update">update</button>
+	  {{/if}}
+</template>

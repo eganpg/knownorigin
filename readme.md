@@ -4,4 +4,25 @@ DEPLOY_HOSTNAME=eu-west-1.galaxy-deploy.meteor.com meteor deploy --settings sett
 
 Command to build mobile while maintaining deployed DB
 
-MONGO_URL='mongodb://peter:alden3258@ds023465.mlab.com:23465/production' meteor run ios-derigin.eu.meteorapp.com/
+MONGO_URL='mongodb://peter:alden3258@ds023465.mlab.com:23465/production' meteor run ios-device --mobile-server http://knowrigin.eu.meteorapp.com/
+
+Instructions for how to deploy 
+
+
+
+
+{{#each secondary}}
+	<div class="col-md-4">
+		{{name}} - {{_id}}
+		<img style="width: 100%" src="http://netdna.copyblogger.com/images/chile-pepper.jpg">
+	
+		{{#each secondary}}
+		  				<div class="col-md-4">
+			  				{{name}} <img style="width: 100%" src={{photo}}>
+			  				<!-- {{#each secondary}}
+			  					<li>{{name}} - {{_id}} - <img src={{photo}}></li> -->
+			  				<!-- {{/each}} -->
+		  				</div>
+		  			{{/each}}
+	</div>	
+{{/each}}
