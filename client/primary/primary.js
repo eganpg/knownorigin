@@ -1,22 +1,27 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Primary } from '../../api/api.js';
-
+import { HTTP } from 'meteor/http'
+// import '../../server/main.js'
 import './primary.html';
 
-
+// Helpers for the primary list view. This lists all ingredients currently in the system
 
 Template.primarylistview.helpers({
+  
   primaryList() {
   	console.log(Primary.findOne());
     return Primary.find({},{sort:{dateReceived: -1}});
   },
   
 });
+
 Session.set('showupdate', false)
+
+// Helpers for the update template on the list view page
+
 Template.update.helpers({
 	showupdate(){
-
   	return Session.get('showupdate')
   	console.log(Session.get('showupdate'));
   },
@@ -25,8 +30,11 @@ Template.update.helpers({
   }
 })
 
+// Events on the list view page
+
 Template.primarylistview.events({
-	// Delete a existing primary
+	
+  // Delete a existing primary
 
   'click #delete'(event, instance) {
   	Primary.remove(this._id)
@@ -77,9 +85,7 @@ Template.primarylistview.events({
   }
 })
 
-Template.primarylistview.rendered=function() {
-	
-}
+
 
 Template.primary.onRendered(function() {
 	$('#my-datepicker').datepicker();
@@ -96,55 +102,67 @@ Template.primary.onRendered(function() {
 
 Template.primary.events({
 
+  // Call the nutritionix API
+
+  'click #nutritionix'(){
+    console.log('api call')
+    Meteor.call("nutritionix", function(error, results) {
+        console.log(results.content); //results.data should be a JSON object
+    });
+  },
+
 // Create a new primary
 	
   'click #create'(event, instance) {
-  	var name = document.getElementById("name").value;
-  	console.log(name);
-  	var date = document.getElementById("my-datepicker").value;
-  	console.log(date);
-  	var origin = document.getElementById("origin").value;
-  	console.log(origin);
-  	var lotnumber = document.getElementById("lotnumber").value;
-  	console.log(lotnumber);
-  	var description = document.getElementById("description").value;
-  	console.log(description);
-  	var photo = document.getElementById("photo").getAttribute('src');
- 		// for some reason the photo won't save without removing the last character
-  	// photo = photo.substring(0, photo.length - 1);
-  	console.log(photo)
-    Primary.insert({
-    	name: name,
-    	dateReceived: new Date(),
-    	lotNumber: lotnumber,
-    	expirationDate: date,
-    	placeOfOrigin: origin,
-    	description: description,
+    console.log(Meteor.userId())
+  	// var name = document.getElementById("name").value;
+  	// console.log(name);
+  	// var date = document.getElementById("my-datepicker").value;
+  	// console.log(date);
+  	// var origin = document.getElementById("origin").value;
+  	// console.log(origin);
+  	// var lotnumber = document.getElementById("lotnumber").value;
+  	// console.log(lotnumber);
+  	// var description = document.getElementById("description").value;
+  	// console.log(description);
+  	// var photo = document.getElementById("photo").getAttribute('src');
+ 		// // for some reason the photo won't save without removing the last character
+  	// // photo = photo.substring(0, photo.length - 1);
+  	// console.log(photo)
+   //  Primary.insert({
+   //  	name: name,
+   //  	dateReceived: new Date(),
+   //  	lotNumber: lotnumber,
+   //  	expirationDate: date,
+   //  	placeOfOrigin: origin,
+   //  	description: description,
+   //    user: Meteor.user(),
+   //   userId: Meteor.userId(),
     	
-    	// climate: climate,
-    	// heatLevel: heatLevel,
-    	// farmName: farmNamem,
-    	// growerName: growerName,
-    	photo: photo
+   //  	// climate: climate,
+   //  	// heatLevel: heatLevel,
+   //  	// farmName: farmNamem,
+   //  	// growerName: growerName,
+   //  	photo: photo
  
-    },
-    function(error, result){
-      // or try function(error, result) and still get nothing 
-      // console.log('result: ' + result);
-      if(error){
-      	alert(error);
-      }
-      console.log('error: ' + error);
-      console.log('_id: ' + result); //this._id doesn't work either
-      document.getElementById("name").value = "";
-	  	document.getElementById("my-datepicker").value = "";
-	  	document.getElementById("origin").value = "";
-	  	document.getElementById("lotnumber").value = "";
-	  	// document.getElementById("size").value = "";
-	  	sweetAlert('Complete')
-      // $('#photo').attr('src', '')
-    });
-    // document.getElementById("name").value('');
+   //  },
+   //  function(error, result){
+   //    // or try function(error, result) and still get nothing 
+   //    // console.log('result: ' + result);
+   //    if(error){
+   //    	alert(error);
+   //    }
+   //    console.log('error: ' + error);
+   //    console.log('_id: ' + result); //this._id doesn't work either
+   //    document.getElementById("name").value = "";
+	  // 	document.getElementById("my-datepicker").value = "";
+	  // 	document.getElementById("origin").value = "";
+	  // 	document.getElementById("lotnumber").value = "";
+	  // 	// document.getElementById("size").value = "";
+	  // 	sweetAlert('Complete')
+   //    // $('#photo').attr('src', '')
+   //  });
+   //  // document.getElementById("name").value('');
   },
 
 // Delete a existing primary

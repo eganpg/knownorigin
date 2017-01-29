@@ -30,6 +30,12 @@ FlowRouter.route('/tertiary', {
   }
 });
 
+FlowRouter.route('/tertiarydisplay', {
+  action: function() {
+    BlazeLayout.render( "emptyTemplate", {content: "tertiarydisplay"});
+  }
+});
+
 FlowRouter.route('/quaternary', {
   action: function() {
     BlazeLayout.render( "baseTemplate", {content: "quaternary"});

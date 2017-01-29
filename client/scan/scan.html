@@ -14,56 +14,56 @@
   {{/if}}
 
   {{#if quaternary}}
-		{{#if showquat}}
+		<!-- {{#if showquat}} -->
 	  	<div class="row">
-		  	<div class="col-md-6 col-md-offset-3 quaternary">
+		  	<div class="col-md-6 col-md-offset-1 quaternary">
 		  		<p>{{quaternary.contents.name}}- Package {{quaternary.packageNumber}} of {{quaternary.totalBatchQuantity}}</p>
-		  		<img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'>
+		  		<!-- <img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'> -->
 		  	</div>
 	  	</div>
-  	{{/if}}
-  	{{#if quatclicked}}
+  	<!-- {{/if}} -->
+  	<!-- {{#if quatclicked}} -->
   	<div class="row">
 	  	{{#each quaternary.contents.secondary}}
 	  		{{#if secondary}}
-					<div class="col-md-4 secondary">
+					<div class="secondary">
 						{{name}} - {{_id}} - {{secondary}}
-						<img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'>  
+						<!-- <img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'> -->  
 					</div>
 				{{else}}
-					<div class="col-md-4 primary">
+					<div class="primary">
 						{{name}} - {{_id}} 
-						<img style="width: 100%" src={{photo}}>  
+						<!-- <img style="width: 100%" src={{photo}}>   -->
 					</div>
 				{{/if}}
 			{{/each}}
 		</div>
-		{{/if}}
+		<!-- {{/if}} -->
 
-		{{#if showsecondary}}
+		<!-- {{#if showsecondary}} -->
 		<div class="row">					
 		 	{{#each showsecondary.secondary}}
 		 		{{#if secondary}}
-					<div class="col-md-4 secondary">
+					<div class="secondary">
 						{{name}} - {{_id}} - {{secondary}}
-						<img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'>  
+						<!-- <img style="width: 98%" src='http://netdna.copyblogger.com/images/chile-pepper.jpg'>  --> 
 					</div>
 				{{else}}
-					<div class="col-md-4 primary">
+					<div class="primary">
 						{{name}} - {{_id}} 
-						<img style="width: 98%" src={{photo}}>  
+						<!-- <img style="width: 98%" src={{photo}}>   -->
 					</div>
 				{{/if}}
 			{{/each}}
 		</div>
-		{{/if}}
-		{{#if showprimary}}
+		<!-- {{/if}} -->
+		<!-- {{#if showprimary}} -->
 		<div class="row">
 			<p>{{showprimary.name}}</p>
 			<p>{{showprimary.dateReceived}}</p>
 		</div>
 
-		{{/if}}
+		<!-- {{/if}} -->
 	  {{/if}}
   <!-- Display the quaternary view here will contain many many loops-->
   <button id="reset" class="form-control btn">Reset</button>

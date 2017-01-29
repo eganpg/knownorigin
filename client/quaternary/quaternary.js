@@ -16,7 +16,12 @@ Template.quaternary.helpers({
 
 Template.quaternary.events({
 	'click #delete'(){
-		Quaternary.remove({_id: this._id})
+		
+    var quat = Quaternary.findOne({_id: this._id});
+    console.log(quat.contents)
+    // Tertiary.insert(quat.contents)
+    // Quaternary.remove({_id: this._id})
+
 	},
 	// Creates a qrcode containing the _id corresponding to the unique instance of the ingredient
 

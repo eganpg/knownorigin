@@ -14,6 +14,51 @@ Template.tertiary.helpers({
 })
 
 Template.tertiary.events({
+
+	// Print the qr code
+
+  'click canvas'(event, instance){
+    console.log()
+    var data = document.getElementById(this._id).childNodes[0];; //attempt to save base64 string to server using this var  
+    console.log(data);
+    var dataUrl = data.toDataURL();
+    console.log("id",this._id);
+    
+    var windowContent = '<!DOCTYPE html>';
+    
+    // for(var v = 1; v < 10; v++){
+	    windowContent += '<html>'
+	    
+	    windowContent += '<body>'
+	    windowContent += '<img src="' + dataUrl + '">';
+	    windowContent += '<p style="width: 50px; font-size:6px;">'+this.name+'</p>'
+	    // windowContent += '<p>'+this.batchNumber+'</p>'
+	    windowContent += '</body>';
+	    windowContent += '</html>';
+	  // }
+
+    
+    
+    
+    var printWin = window.open('','','width=840,height=760');
+    printWin.document.open();
+    printWin.document.write(windowContent);
+    printWin.document.close();
+    printWin.focus();
+    printWin.print();
+    printWin.close();
+  },
+
+	
+	// Creates a qrcode containing the _id corresponding to the unique instance of the ingredient
+
+  'click .createQr'(event, instance){
+    var id = String(this._id);
+    console.log(id)
+    // Generate the QR Code Here
+   $('#'+this._id).qrcode({width: 64,height: 64,text: id});
+  },
+
 	'click #delete'(){
 		Tertiary.remove(this._id)
 	},
@@ -63,9 +108,14 @@ Template.tertiary.events({
 					  		totalBatchQuantity: inputValue,
 					  		packageNumber: x,
 					  		contents: tertiaryToMove,
-					  		photo: photo
-					  	})
+					  		photo: photo,
+					  		user: Meteor.user(),
+   							userId: Meteor.userId()
+					  	},
+					  	function(error, result){ alert('complete'); console.log(result)});
 				  	}
+
+
 				  });	
      	}
 					  // swal("success");
@@ -80,5 +130,11 @@ Template.tertiary.events({
 		
 		// Quaternary.insert(tertiaryToMove);
 		// Tertiary.remove(this._id);
+	}
+})
+
+Template.tertiarydisplay.helpers({
+	tertiary(){
+		return Tertiary.find({},{sort:{dateReceived: -1}});
 	}
 })

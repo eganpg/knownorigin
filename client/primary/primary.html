@@ -1,5 +1,6 @@
 <template name="primary">
 	<h1>pri·ma·ry - of chief importance; principal</h1>
+	{{nutritionix}}
 	<p>Name <input class="form-control" id="name"></p>
 	<p>Origin<input type="text" class="form-control" id="origin"></p>
 	<p>Description<input type="text" class="form-control" id="description"></p>
@@ -7,11 +8,15 @@
 	<!-- <p>Package Size<input type="text" class="form-control" id="size"></p> -->
 	<p>Lot Number<input type="text" class="form-control" id="lotnumber"></p>
 	<!-- <p>Number of Packages in Batch<input type="text" class="form-control" id="quantity"></p> -->
-	
-	<button id="phototrigger">Take Photo</button>
-	 <img id="photo" value={{photo}} style="width: 50px; height: 50px" class="photo">
+	<img id="photo" value={{photo}} style="width: 50px; height: 50px" class="photo">	<br>
+	<button id="phototrigger" class="btn-lg">Take Photo</button><br>
+
+	<!-- <button id="nutritionix">Call Api</button> -->
+
+
+	 
   
-  <button clas="btn" id="create">Submit</button>
+  <button class="btn-lg" id="create">Submit</button>
   
 </template>	
 
@@ -40,9 +45,9 @@
 		<p>Lot Number<input type="text" class="form-control" id="lotnumber" value={{value.lotnumber}}></p>
 		<!-- <p>Number of Packages in Batch<input type="text" class="form-control" id="quantity" value={{value.quantity}}></p> -->
 		
-		<button id="phototrigger">Take Photo</button>
+		<button id="phototrigger" class="btn-lg">Take Photo</button>
 		 <img id="photo" src={{value.photo}} value={{photo}} style="width: 50px; height: 50px" class="photo">
 	  
-	  <button clas="btn" id="update">update</button>
+	  <button clas="btn-default" id="update">update</button>
 	  {{/if}}
 </template>

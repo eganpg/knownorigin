@@ -77,7 +77,9 @@ Template.secondary.events({
       name: name,
     	secondary: secondary,
       dateReceived: new Date(),
-      photo: photo
+      photo: photo,
+      user: Meteor.user(),
+      userId: Meteor.userId(),
     	
     }, function(){
       secondary = [];
@@ -248,31 +250,53 @@ Template.secondary.events({
             // Search for both primary and secondary components
 
             var primary = Primary.findOne({_id : result.text});
+            var second = Secondary.findOne({_id : result.text});
             console.log('primary', primary);
+            console.log('secondary', second);
 
-            // if(primary == undefined){
-            //   var secondary = Secondary.findOne({_id : secondary});
-            // }
+            if(primary != undefined){
+              // Confirmation that the correct item is being added
 
-            // Confirmation that the correct item is being added
+              sweetAlert({
+                title: "Add?" + primary.name + " to the recipe",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false,
+                html: false
+              }, function(){
+                secondary.push(primary);
+                // console.log('array', secondary)
+                swal("Added!",
+                primary.name + " has been added to this secondary",
+                "success");
+              });
+            
+            }
+            if(second != undefined){
+              sweetAlert({
+                title: "Add?" + second.name + " to the recipe",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                closeOnConfirm: false,
+                html: false
+              }, function(){
+                secondary.push(primary);
+                // console.log('array', secondary)
+                swal("Added!",
+                second.name + " has been added to this secondary",
+                "success");
+              });
 
-            sweetAlert({
-              title: "Add?" + primary.name + " to the recipe",
-              text: "",
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#DD6B55",
-              confirmButtonText: "Yes",
-              closeOnConfirm: false,
-              html: false
-            }, function(){
-              secondary.push(primary);
-              // console.log('array', secondary)
-              swal("Added!",
-              primary.name + " has been added to this secondary",
-              "success");
-            });
-            // var secondard = Secondary.findOne({_id : message});
+            }
+
+            
+            
             
           }
         }, 

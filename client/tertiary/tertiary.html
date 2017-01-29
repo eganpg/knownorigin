@@ -2,11 +2,17 @@
 	<h1>This is the tertiary view</h1>
 	{{#each tertiary}}
 		<li>
-			{{_id}} {{name}} - {{dateReceived}} <button id="delete">X</button><button id="secondary">Make Secondary</button><button id="quaternary">Make Quaternary</button><div id={{_id}}></div>
+			{{_id}} {{name}} - {{dateReceived}} <button class="createQr">QR</button><button id="delete">X</button><button id="secondary">Make Secondary</button><button id="quaternary">Make Quaternary</button><div id={{_id}}></div>
 			{{#each secondary}}
 				<ul>{{name}}</ul>
 			{{/each}}
 		</li>
 	{{/each}}
 
+</template>
+<template name="tertiarydisplay">
+	{{#each tertiary}}
+		<ul>{{name}} - {{dateReceived}} </ul>
+	{{/each}}
+	
 </template>

@@ -52,9 +52,11 @@ Template.scan.events({
 
           // Search for both primary and secondary components
 
-          var quaternary = Quaternary.findOne({_id : message});
-          console.log('quaternary', quaternary);
-          Session.set('quaternary', quaternary._id)
+          // var quaternary = Quaternary.findOne({_id : message});
+          var tertiary = Tertiary.findOne({_id : message});
+          console.log('quaternary', tertiary);
+          console.log('quaternary_id', tertiary._id);
+          // Session.set('quaternary', quaternary._id)
 
           // if(primary == undefined){
           //   var secondary = Secondary.findOne({_id : secondary});
@@ -62,7 +64,7 @@ Template.scan.events({
 
           // Confirmation that the correct item is being added
 
-          sweetAlert('Scan Complete');
+          sweetAlert(tertiary._id);
           // var secondard = Secondary.findOne({_id : message});
           qrScanner.off('scan', function(err, message) {
             console.log(message);
@@ -123,7 +125,7 @@ Template.scan.events({
 
          if ((result.text != null) && (result.text !=undefined)) {
             var quaternary = Quaternary.findOne({_id : result.text});
-            // sweetAlert('quaternary', quaternary._id);
+            sweetAlert('quaternary', quaternary._id);
             Session.set('quaternary', quaternary._id)
             sweetAlert('Scan Complete');
           }

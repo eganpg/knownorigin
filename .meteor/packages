@@ -34,3 +34,5 @@ jeremy:geocomplete
 mdg:camera
 session
 mizzao:autocomplete
+http
+npm-bcrypt
