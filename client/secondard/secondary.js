@@ -232,73 +232,45 @@ Template.secondary.events({
 
   // Scanning event for mobile - currently needs to be updated in order to scan secondary components, only scans primary
 
-  'click #mobilescan'() {
+  'click #mobilescanprimary'() {
       
+    cordova.plugins.barcodeScanner.scan(
+      function (result) {
+          
 
-      cordova.plugins.barcodeScanner.scan(
-        function (result) {
-          // sweetAlert("We got a barcode\n" +
-          //   "Result: " + result.text + "\n" +
-          //   "Format: " + result.format + "\n" +
-          //   "Cancelled: " + result.cancelled);
+        if ((result.text != null) && (result.text !=undefined)) {
 
+          // Search for both primary and secondary components
 
-         if ((result.text != null) && (result.text !=undefined)) {
+          var primary = Primary.findOne({_id : result.text});
+          // var sec = Secondary.findOne({_id : result.text});
+          // alert(primary)
+          // alert(sec)
+          console.log('primary', primary);
+          // console.log('secondary', sec);
 
-       
+          if(primary != undefined){
+            // Confirmation that the correct item is being added
 
-            // Search for both primary and secondary components
-
-            var primary = Primary.findOne({_id : result.text});
-            var second = Secondary.findOne({_id : result.text});
-            console.log('primary', primary);
-            console.log('secondary', second);
-
-            if(primary != undefined){
-              // Confirmation that the correct item is being added
-
-              sweetAlert({
-                title: "Add?" + primary.name + " to the recipe",
-                text: "",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: false,
-                html: false
-              }, function(){
-                secondary.push(primary);
-                // console.log('array', secondary)
-                swal("Added!",
-                primary.name + " has been added to this secondary",
-                "success");
-              });
-            
-            }
-            if(second != undefined){
-              sweetAlert({
-                title: "Add?" + second.name + " to the recipe",
-                text: "",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: false,
-                html: false
-              }, function(){
-                secondary.push(primary);
-                // console.log('array', secondary)
-                swal("Added!",
-                second.name + " has been added to this secondary",
-                "success");
-              });
-
-            }
-
-            
-            
-            
+            sweetAlert({
+              title: "Add?" + primary.name + " to the recipe",
+              text: "",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "Yes",
+              closeOnConfirm: false,
+              html: false
+            }, function(){
+              secondary.push(primary);
+              // console.log('array', secondary)
+              swal("Added!",
+              primary.name + " has been added to this secondary",
+              "success");
+            });
+          
           }
+        
         }, 
         function (error) {
           alert("Scanning failed: " + error);
