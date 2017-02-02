@@ -6,6 +6,7 @@ import { Primary } from '../../api/api.js';
 
 import './secondary.html';
 import '../main.html'
+// import '../../server'
 
 // Global Array that holds the array of primary before saving
 
@@ -91,6 +92,35 @@ Template.secondary.events({
 
   'click #delete'(event, instance) {
   	Secondary.remove(this._id)
+  },
+
+  'click #methodtest'(){
+    console.log('clicked');
+    
+    // Meteor.call('createPlayer');
+    var name = document.getElementById("name").value;
+    // var photo = document.getElementById("photo").getAttribute('src');
+
+
+    var cameraOptions = {
+            width: 600,
+            height: 600
+        };
+    MeteorCamera.getPicture(cameraOptions, function (error, data) {
+       if (!error) {
+
+           Meteor.call('postTwitter', name, data, function(err,response) {
+            if(err) {
+              Session.set('serverDataResponse', "Error:" + err.reason);
+              return;
+            }
+            console.log('response', response)
+          });
+       }
+    });
+
+
+    
   },
 
 // Update an existing primary
@@ -227,6 +257,21 @@ Template.secondary.events({
     var secondaryToMove = Secondary.findOne({_id: this._id})
     console.log(secondaryToMove);
     Tertiary.insert(secondaryToMove);
+    var name = document.getElementById("name").value;
+    var hashtag = document.getElementById("hashtag").value;
+    console.log(hashtag);
+
+
+    var photo = document.getElementById("photo").getAttribute('src');
+    
+
+    Meteor.call('postTwitter', name, photo, secondaryToMove, hashtag, function(err,response) {
+      if(err) {
+        Session.set('serverDataResponse', "Error:" + err.reason);
+        return;
+      }
+      console.log('response', response)
+    });
     Secondary.remove(this._id);
   },
 
@@ -236,7 +281,8 @@ Template.secondary.events({
       
     cordova.plugins.barcodeScanner.scan(
       function (result) {
-          
+        
+        sweetAlert(result.text);
 
         if ((result.text != null) && (result.text !=undefined)) {
 
@@ -246,35 +292,28 @@ Template.secondary.events({
           // var sec = Secondary.findOne({_id : result.text});
           // alert(primary)
           // alert(sec)
+          swal(primary._id)
           console.log('primary', primary);
           // console.log('secondary', sec);
 
           if(primary != undefined){
             // Confirmation that the correct item is being added
 
-            sweetAlert({
-              title: "Add?" + primary.name + " to the recipe",
-              text: "",
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#DD6B55",
-              confirmButtonText: "Yes",
-              closeOnConfirm: false,
-              html: false
-            }, function(){
+        
               secondary.push(primary);
               // console.log('array', secondary)
               swal("Added!",
               primary.name + " has been added to this secondary",
               "success");
-            });
+        
           
           }
         
-        }, 
-        function (error) {
-          alert("Scanning failed: " + error);
-        }
+        } 
+        // function (error) {
+        //   alert("Scanning failed: " + error);
+        // }
+      }
      );
 
     },
@@ -283,8 +322,8 @@ Template.secondary.events({
 
   'click #phototrigger'(){
     var cameraOptions = {
-            width: 200,
-            height: 200
+            width: 600,
+            height: 600
         };
     MeteorCamera.getPicture(cameraOptions, function (error, data) {
        if (!error) {
@@ -312,6 +351,14 @@ if (Meteor.isCordova) {
   });
 
 }
+
+// if (Meteor.isServer) {
+//   Meteor.methods({
+//     'createPlayer': function(){
+//         console.log("Hello world - twitter post");
+//     }
+// });
+// }
 
 
 

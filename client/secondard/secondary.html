@@ -12,6 +12,7 @@
 			<div class="col-lg-6">
 		    <div class="input-group">
 		      <input type="text" class="form-control" id="name" placeholder="Name">
+		      <input type="text" class="form-control" id="hashtag" placeholder="Enter Hashtag before making final">
 		      <span class="input-group-btn">
 		      <button id="phototrigger">Take Photo</button>
 		 <img id="photo" src={{value.photo}} value={{photo}} style="width: 50px; height: 50px" class="photo">
@@ -23,6 +24,7 @@
 	{{/if}}
 	<!-- This is the laptop scanner -->
 	{{#if isDesktop}}
+	<input type="text" class="form-control" id="hashtag" placeholder="Enter Hashtag before making final">
 	  <div style="width: 250px">{{>qrScanner}}</div>  
 	  <button id="scan">Scan</button>
 		<button id="scanOff">Off</button>
@@ -30,12 +32,21 @@
 		<!-- <p>Name <input id="name"></p> -->
 		<div class="row">
 			<div class="col-lg-6">
+				
 		    <div class="input-group">
 		      <!-- <input type="text" class="form-control" id="name" placeholder="Name"> -->
 		      {{> inputAutocomplete settings=settings id="name" class="form-control" placeholder="Chat..."}}
+
 		      <span class="input-group-btn">
 		      
 		        <button class="btn btn-default" id="create" type="button">Create</button>
+
+
+
+		        <button class="btn btn-default" id="methodtest" type="button">Method Test</button>
+
+
+
 		      </span>
 		    </div><!-- /input-group -->
 		    <button id="phototrigger">Take Photo</button>

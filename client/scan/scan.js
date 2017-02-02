@@ -41,7 +41,7 @@ Template.scan.events({
 
 
   'click #scan'(event, instance) {
-      
+      console.log('on');
       qrScanner.on('scan', function(err, message) {
         console.log(message);
         if ((message != null) && (message !=undefined)) {

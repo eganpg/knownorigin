@@ -115,54 +115,54 @@ Template.primary.events({
 	
   'click #create'(event, instance) {
     console.log(Meteor.userId())
-  	// var name = document.getElementById("name").value;
-  	// console.log(name);
-  	// var date = document.getElementById("my-datepicker").value;
-  	// console.log(date);
-  	// var origin = document.getElementById("origin").value;
-  	// console.log(origin);
-  	// var lotnumber = document.getElementById("lotnumber").value;
-  	// console.log(lotnumber);
-  	// var description = document.getElementById("description").value;
-  	// console.log(description);
-  	// var photo = document.getElementById("photo").getAttribute('src');
- 		// // for some reason the photo won't save without removing the last character
-  	// // photo = photo.substring(0, photo.length - 1);
-  	// console.log(photo)
-   //  Primary.insert({
-   //  	name: name,
-   //  	dateReceived: new Date(),
-   //  	lotNumber: lotnumber,
-   //  	expirationDate: date,
-   //  	placeOfOrigin: origin,
-   //  	description: description,
-   //    user: Meteor.user(),
-   //   userId: Meteor.userId(),
+  	var name = document.getElementById("name").value;
+  	console.log(name);
+  	var date = document.getElementById("my-datepicker").value;
+  	console.log(date);
+  	var origin = document.getElementById("origin").value;
+  	console.log(origin);
+  	var lotnumber = document.getElementById("lotnumber").value;
+  	console.log(lotnumber);
+  	var description = document.getElementById("description").value;
+  	console.log(description);
+  	var photo = document.getElementById("photo").getAttribute('src');
+ 		// for some reason the photo won't save without removing the last character
+  	// photo = photo.substring(0, photo.length - 1);
+  	console.log(photo)
+    Primary.insert({
+    	name: name,
+    	dateReceived: new Date(),
+    	lotNumber: lotnumber,
+    	expirationDate: date,
+    	placeOfOrigin: origin,
+    	description: description,
+      user: Meteor.user(),
+     userId: Meteor.userId(),
     	
-   //  	// climate: climate,
-   //  	// heatLevel: heatLevel,
-   //  	// farmName: farmNamem,
-   //  	// growerName: growerName,
-   //  	photo: photo
+    	// climate: climate,
+    	// heatLevel: heatLevel,
+    	// farmName: farmNamem,
+    	// growerName: growerName,
+    	photo: photo
  
-   //  },
-   //  function(error, result){
-   //    // or try function(error, result) and still get nothing 
-   //    // console.log('result: ' + result);
-   //    if(error){
-   //    	alert(error);
-   //    }
-   //    console.log('error: ' + error);
-   //    console.log('_id: ' + result); //this._id doesn't work either
-   //    document.getElementById("name").value = "";
-	  // 	document.getElementById("my-datepicker").value = "";
-	  // 	document.getElementById("origin").value = "";
-	  // 	document.getElementById("lotnumber").value = "";
-	  // 	// document.getElementById("size").value = "";
-	  // 	sweetAlert('Complete')
-   //    // $('#photo').attr('src', '')
-   //  });
-   //  // document.getElementById("name").value('');
+    },
+    function(error, result){
+      // or try function(error, result) and still get nothing 
+      // console.log('result: ' + result);
+      if(error){
+      	alert(error);
+      }
+      console.log('error: ' + error);
+      console.log('_id: ' + result); //this._id doesn't work either
+      document.getElementById("name").value = "";
+	  	document.getElementById("my-datepicker").value = "";
+	  	document.getElementById("origin").value = "";
+	  	document.getElementById("lotnumber").value = "";
+	  	// document.getElementById("size").value = "";
+	  	sweetAlert('Complete')
+      // $('#photo').attr('src', '')
+    });
+    // document.getElementById("name").value('');
   },
 
 // Delete a existing primary
