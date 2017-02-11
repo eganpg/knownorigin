@@ -60,7 +60,14 @@ Template.tertiary.events({
   },
 
 	'click #delete'(){
-		Tertiary.remove(this._id)
+		 Meteor.call('deleteTertiary', this._id, function(err, response){
+      if(err){
+        sweetAlert('404 error.')
+      }
+
+      console.log('response', response)
+    })
+		
 	},
 	'click #secondary'(){
 		console.log(this._id)
@@ -72,64 +79,53 @@ Template.tertiary.events({
 	'click #quaternary'(){
 		var tertiaryToMove = Tertiary.findOne({_id: this._id})
 
-		// Save a Photo of an individual package
+   	swal({
+			  title: "An input!",
+			  text: "How many jars in this run",
+			  type: "input",
+			  showCancelButton: true,
+			  closeOnConfirm: true,
+			  animation: "slide-from-top",
+			  inputPlaceholder: "Write something"
+			},
+			function(inputValue){
+			  if (inputValue === false) return false;
+			  
+			  if (inputValue === "") {
+			    swal.showInputError("You need to write something!");
+			    return false
+			  }
+			  for(var x = 1; x <= inputValue; x++){
+			  	console.log(x)
+			  	Quaternary.insert({
+			  		name: tertiaryToMove.name,
+			  		totalBatchQuantity: inputValue,
+			  		packageNumber: x,
+			  		contents: tertiaryToMove,
+			  		// photo: photo,
+			  		user: Meteor.user(),
+							userId: Meteor.userId()
+			  	}, function(error, result){ 
+						alert('complete'); 
+						console.log(result);
 
-		var cameraOptions = {
-            width: 200,
-            height: 200
-        };
-    MeteorCamera.getPicture(cameraOptions, function (error, data) {
-     	if (!error) {
+					});
+		  	}
+		  	Meteor.call('postCase', tertiaryToMove.name, tertiaryToMove._id, inputValue, function(err,response) {
+	            if(err) {
+	              Session.set('serverDataResponse', "Error:" + err.reason);
+	              return;
+	            }
+	            console.log('response', response)
+	          });
 
-           // $('.photo').attr('src', data); 
-           // $('.photo').attr('value', data); 
 
-           var photo = data
-       	swal({
-					  title: "An input!",
-					  text: "How many jars in this run",
-					  type: "input",
-					  showCancelButton: true,
-					  closeOnConfirm: true,
-					  animation: "slide-from-top",
-					  inputPlaceholder: "Write something"
-					},
-					function(inputValue){
-					  if (inputValue === false) return false;
+		  });	
+ 	
 					  
-					  if (inputValue === "") {
-					    swal.showInputError("You need to write something!");
-					    return false
-					  }
-					  for(var x = 1; x <= inputValue; x++){
-					  	console.log(x)
-					  	Quaternary.insert({
-					  		name: tertiaryToMove.name,
-					  		totalBatchQuantity: inputValue,
-					  		packageNumber: x,
-					  		contents: tertiaryToMove,
-					  		photo: photo,
-					  		user: Meteor.user(),
-   							userId: Meteor.userId()
-					  	},
-					  	function(error, result){ alert('complete'); console.log(result)});
-				  	}
-
-
-				  });	
-     	}
-					  // swal("success");
-   	});
+   	// });
     
-    event.preventDefault();
-
-
-
-		
-		
-		
-		// Quaternary.insert(tertiaryToMove);
-		// Tertiary.remove(this._id);
+    // event.preventDefault();
 	}
 })
 

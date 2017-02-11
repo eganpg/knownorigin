@@ -37,7 +37,14 @@ Template.primarylistview.events({
   // Delete a existing primary
 
   'click #delete'(event, instance) {
-  	Primary.remove(this._id)
+     Meteor.call('deletePrimary', this._id, function(err, response){
+      if(err){
+        sweetAlert('404 error.')
+      }
+      console.log('response', response)
+
+    })
+  	
   },
 
   // Creates a qrcode containing the _id corresponding to the unique instance of the ingredient

@@ -88,10 +88,16 @@ Template.secondary.events({
     
   },
 
-// Delete a existing primary
+// Delete a existing secondary
 
   'click #delete'(event, instance) {
-  	Secondary.remove(this._id)
+    Meteor.call('deleteSecondary', this._id, function(err, response){
+      if(err){
+        sweetAlert('404 error.')
+      }
+      console.log('response', response)
+    })
+  	
   },
 
   'click #methodtest'(){
@@ -262,16 +268,27 @@ Template.secondary.events({
     console.log(hashtag);
 
 
-    var photo = document.getElementById("photo").getAttribute('src');
+    // var photo = document.getElementById("photo").getAttribute('src');
+
+    var cameraOptions = {
+            width: 1000,
+            height: 1000
+        };
+    MeteorCamera.getPicture(cameraOptions, function (error, data) {
+       if (!error) {
+
+           Meteor.call('postTwitter', name, data, secondaryToMove, hashtag, function(err,response) {
+            if(err) {
+              Session.set('serverDataResponse', "Error:" + err.reason);
+              return;
+            }
+            console.log('response', response)
+          });
+       }
+    });
     
 
-    Meteor.call('postTwitter', name, photo, secondaryToMove, hashtag, function(err,response) {
-      if(err) {
-        Session.set('serverDataResponse', "Error:" + err.reason);
-        return;
-      }
-      console.log('response', response)
-    });
+    
     Secondary.remove(this._id);
   },
 

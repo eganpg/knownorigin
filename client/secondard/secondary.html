@@ -1,6 +1,6 @@
 <template name="secondary">
-	<h1>sec·ond·ar·y - resulting from someone or something else that is primary</h1>
-	<p>Here you are able to create unique recipes based on any combination of ingredients in your database</p>
+	<!-- <h1>sec·ond·ar·y - resulting from someone or something else that is primary</h1>
+	<p>Here you are able to create unique recipes based on any combination of ingredients in your database</p> -->
 	{{#if isPhone}}
 		<h1>Phone</h1>
 		<button class="bth-lg" id="mobilescanprimary">Scan Primary</button>
@@ -21,6 +21,16 @@
 		    </div><!-- /input-group -->
 		  </div><!-- /.col-lg-6 -->
 		</div><!-- /.row -->
+		<row>
+			{{#each second}}
+				<li>
+					{{_id}} - {{name}} - {{dateReceived}} - <img src={{photo}}><button class="createQr">QR</button><button id="delete">X</button><button id="tertiary">Make Final</button><div id={{_id}}></div>
+					{{#each secondary}}
+						<ul>{{name}}</ul>
+					{{/each}}
+				</li>
+			{{/each}}
+		</row>
 	{{/if}}
 	<!-- This is the laptop scanner -->
 	{{#if isDesktop}}
