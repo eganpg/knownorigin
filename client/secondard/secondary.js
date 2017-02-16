@@ -361,7 +361,7 @@ Template.secondary.events({
             // Confirmation that the correct item is being added
 
         
-              sec1.push(primary);
+              secondary.push(sec1);
               // console.log('array', secondary)
               swal("Added!",
               sec1.name + " has been added to this secondary",
