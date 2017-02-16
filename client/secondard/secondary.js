@@ -237,13 +237,16 @@ Template.secondary.events({
     console.log(data);
     var dataUrl = data.toDataURL();
     console.log("id",this._id);
+    console.log(this);
     
     var windowContent = '<!DOCTYPE html>';
     windowContent += '<html>'
     
     windowContent += '<body>'
     windowContent += '<img src="' + dataUrl + '">';
-    windowContent += '<p style="width: 50px; font-size:10px;">'+this.name+'</p>'
+    windowContent += '<p style="width: 75px; font-size:6px;">'+this.name+'</p>'
+    windowContent += '<p style="width: 75px; font-size:6px;">'+this._id.substring(0,4)+'</p>'
+    windowContent += '<p style="width: 75px; font-size:6px;">'+this.dateReceived +'</p>'
     // windowContent += '<p>'+this.batchNumber+'</p>'
     windowContent += '</body>';
     windowContent += '</html>';
@@ -321,6 +324,47 @@ Template.secondary.events({
               // console.log('array', secondary)
               swal("Added!",
               primary.name + " has been added to this secondary",
+              "success");
+        
+          
+          }
+        
+        } 
+        // function (error) {
+        //   alert("Scanning failed: " + error);
+        // }
+      }
+     );
+
+    },
+
+    'click #mobilescansecondary'() {
+      
+    cordova.plugins.barcodeScanner.scan(
+      function (result) {
+        
+        sweetAlert(result.text);
+
+        if ((result.text != null) && (result.text !=undefined)) {
+
+          // Search for both primary and secondary components
+
+          var sec1 = Secondary.findOne({_id : result.text});
+          // var sec = Secondary.findOne({_id : result.text});
+          // alert(primary)
+          // alert(sec)
+          swal(sec1._id)
+          console.log('secondary', sec1);
+          // console.log('secondary', sec);
+
+          if(sec1 != undefined){
+            // Confirmation that the correct item is being added
+
+        
+              sec1.push(primary);
+              // console.log('array', secondary)
+              swal("Added!",
+              sec1.name + " has been added to this secondary",
               "success");
         
           

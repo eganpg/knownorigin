@@ -24,6 +24,7 @@ Template.tertiary.events({
     var dataUrl = data.toDataURL();
     console.log("id",this._id);
     
+    
     var windowContent = '<!DOCTYPE html>';
     
     // for(var v = 1; v < 10; v++){
@@ -31,8 +32,9 @@ Template.tertiary.events({
 	    
 	    windowContent += '<body>'
 	    windowContent += '<img src="' + dataUrl + '">';
-	    windowContent += '<p style="width: 50px; font-size:6px;">'+this.name+'</p>'
-	    // windowContent += '<p>'+this.batchNumber+'</p>'
+	    windowContent += '<p style="width: 75px; font-size:6px;">'+this.name+'</p>'
+	    windowContent += '<p style="width: 75px; font-size:6px;">'+this._id.substring(0,4)+'</p>'
+	    windowContent += '<p style="width: 75px; font-size:6px;">'+this.dateReceived +'</p>'
 	    windowContent += '</body>';
 	    windowContent += '</html>';
 	  // }
@@ -54,7 +56,7 @@ Template.tertiary.events({
 
   'click .createQr'(event, instance){
     var id = String(this._id);
-    console.log(id)
+    // console.log(id)
     // Generate the QR Code Here
    $('#'+this._id).qrcode({width: 64,height: 64,text: id});
   },
@@ -106,7 +108,7 @@ Template.tertiary.events({
 			  		user: Meteor.user(),
 							userId: Meteor.userId()
 			  	}, function(error, result){ 
-						alert('complete'); 
+						// alert('complete'); 
 						console.log(result);
 
 					});
