@@ -1,5 +1,6 @@
 <template name="scan">
 	{{#if isPhone}}
+		{{> qrScanner}}
 		<button id="mobilescan">Scan</button>
 		<button id="scanOff">Off</button>
 	{{/if}}

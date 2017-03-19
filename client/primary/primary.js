@@ -11,7 +11,7 @@ Template.primarylistview.helpers({
   
   primaryList() {
   	console.log(Primary.findOne());
-    return Primary.find({},{sort:{dateReceived: -1}});
+    return Primary.find({},{sort:{dateReceived: -1},limit : 50});
   },
   
 });

@@ -58,7 +58,7 @@ Template.secondary.helpers({
 
   second(){
     console.log(Secondary.findOne())
-    return Secondary.find({},{sort:{dateReceived: -1}});
+    return Secondary.find({},{sort:{dateReceived: -1},limit : 50});
   }
 });
 ////////////////////////////////////
@@ -100,34 +100,34 @@ Template.secondary.events({
   	
   },
 
-  'click #methodtest'(){
-    console.log('clicked');
+  // 'click #methodtest'(){
+  //   console.log('clicked');
     
-    // Meteor.call('createPlayer');
-    var name = document.getElementById("name").value;
-    // var photo = document.getElementById("photo").getAttribute('src');
+  //   // Meteor.call('createPlayer');
+  //   var name = document.getElementById("name").value;
+  //   // var photo = document.getElementById("photo").getAttribute('src');
 
 
-    var cameraOptions = {
-            width: 600,
-            height: 600
-        };
-    MeteorCamera.getPicture(cameraOptions, function (error, data) {
-       if (!error) {
+  //   var cameraOptions = {
+  //           width: 600,
+  //           height: 600
+  //       };
+  //   MeteorCamera.getPicture(cameraOptions, function (error, data) {
+  //      if (!error) {
 
-           Meteor.call('postTwitter', name, data, function(err,response) {
-            if(err) {
-              Session.set('serverDataResponse', "Error:" + err.reason);
-              return;
-            }
-            console.log('response', response)
-          });
-       }
-    });
+  //          Meteor.call('postTwitter', name, data, function(err,response) {
+  //           if(err) {
+  //             Session.set('serverDataResponse', "Error:" + err.reason);
+  //             return;
+  //           }
+  //           console.log('response', response)
+  //         });
+  //      }
+  //   });
 
 
     
-  },
+  // },
 
 // Update an existing primary
 

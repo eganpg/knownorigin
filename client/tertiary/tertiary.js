@@ -26,21 +26,15 @@ Template.tertiary.events({
     
     
     var windowContent = '<!DOCTYPE html>';
-    
-    // for(var v = 1; v < 10; v++){
-	    windowContent += '<html>'
-	    
-	    windowContent += '<body>'
-	    windowContent += '<img src="' + dataUrl + '">';
-	    windowContent += '<p style="width: 75px; font-size:6px;">'+this.name+'</p>'
-	    windowContent += '<p style="width: 75px; font-size:6px;">'+this._id.substring(0,4)+'</p>'
-	    windowContent += '<p style="width: 75px; font-size:6px;">'+this.dateReceived +'</p>'
-	    windowContent += '</body>';
-	    windowContent += '</html>';
-	  // }
-
-    
-    
+  
+    windowContent += '<html>'
+    windowContent += '<body>'
+    windowContent += '<img src="' + dataUrl + '">';
+    windowContent += '<p style="width: 75px; font-size:6px;">'+this.name+'</p>'
+    windowContent += '<p style="width: 75px; font-size:6px;">'+this._id.substring(0,4)+'</p>'
+    windowContent += '<p style="width: 75px; font-size:6px;">'+this.dateReceived +'</p>'
+    windowContent += '</body>';
+    windowContent += '</html>';
     
     var printWin = window.open('','','width=840,height=760');
     printWin.document.open();
@@ -106,20 +100,20 @@ Template.tertiary.events({
 			  		contents: tertiaryToMove,
 			  		// photo: photo,
 			  		user: Meteor.user(),
-							userId: Meteor.userId()
+						userId: Meteor.userId()
 			  	}, function(error, result){ 
 						// alert('complete'); 
 						console.log(result);
 
 					});
 		  	}
-		  	Meteor.call('postCase', tertiaryToMove.name, tertiaryToMove._id, inputValue, function(err,response) {
-	            if(err) {
-	              Session.set('serverDataResponse', "Error:" + err.reason);
-	              return;
-	            }
-	            console.log('response', response)
-	          });
+		  	// Meteor.call('postCase', tertiaryToMove.name, tertiaryToMove._id, inputValue, function(err,response) {
+	    //         if(err) {
+	    //           Session.set('serverDataResponse', "Error:" + err.reason);
+	    //           return;
+	    //         }
+	    //         console.log('response', response)
+	    //       });
 
 
 		  });	

@@ -10,7 +10,7 @@ import './quaternary.html';
 Template.quaternary.helpers({
 	quaternary(){
 		console.log(Quaternary.findOne())
-		return Quaternary.find();
+		return Quaternary.find({},{sort:{dateReceived: -1}});
 	}
 })
 
