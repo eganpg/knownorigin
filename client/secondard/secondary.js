@@ -277,18 +277,23 @@ Template.secondary.events({
             width: 1000,
             height: 1000
         };
-    MeteorCamera.getPicture(cameraOptions, function (error, data) {
-       if (!error) {
 
-           Meteor.call('postTwitter', name, data, secondaryToMove, hashtag, function(err,response) {
-            if(err) {
-              Session.set('serverDataResponse', "Error:" + err.reason);
-              return;
-            }
-            console.log('response', response)
-          });
-       }
-    });
+        // fix the twitter section so it works right - temporarily disabled
+
+
+
+    // MeteorCamera.getPicture(cameraOptions, function (error, data) {
+    //    if (!error) {
+          //   var data = null;
+          //  Meteor.call('postTwitter', name, data, secondaryToMove, hashtag, function(err,response) {
+          //   if(err) {
+          //     Session.set('serverDataResponse', "Error:" + err.reason);
+          //     return;
+          //   }
+          //   console.log('response', response)
+          // });
+       // }
+    // });
     
 
     
