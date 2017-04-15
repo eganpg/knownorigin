@@ -47,3 +47,9 @@ FlowRouter.route('/scan', {
     BlazeLayout.render( "baseTemplate", {content: "scan"});
   }
 });
+
+FlowRouter.route('/dna', {
+  action: function() {
+    BlazeLayout.render( "baseTemplate", {content: "dna"});
+  }
+});

@@ -8,8 +8,8 @@ import { Primary } from '../../api/api.js';
 import './quaternary.html';
 
 Template.quaternary.helpers({
-	quaternary(){
-		console.log(Quaternary.findOne())
+	quaternary1(){
+		// console.log(Quaternary.findOne())
 		return Quaternary.find({},{sort:{dateReceived: -1}});
 	}
 })

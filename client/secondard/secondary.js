@@ -269,6 +269,7 @@ Template.secondary.events({
     var name = document.getElementById("name").value;
     var hashtag = document.getElementById("hashtag").value;
     console.log(hashtag);
+    var data = '';
 
 
     // var photo = document.getElementById("photo").getAttribute('src');
@@ -280,7 +281,13 @@ Template.secondary.events({
 
         // fix the twitter section so it works right - temporarily disabled
 
-
+      Meteor.call('postTwitter', name, data, secondaryToMove, hashtag, function(err,response) {
+        if(err) {
+          Session.set('serverDataResponse', "Error:" + err.reason);
+          return;
+        }
+        console.log('response', response)
+      });
 
     // MeteorCamera.getPicture(cameraOptions, function (error, data) {
     //    if (!error) {
